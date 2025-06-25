@@ -13,9 +13,6 @@ public class User {
     @TableField("password")
     private String password;
 
-    @TableField("role")
-    private String role;
-
     @TableField("user_type")
     private String userType;
 }

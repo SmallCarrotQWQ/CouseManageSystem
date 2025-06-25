@@ -16,7 +16,7 @@ public class UserMapperTest {
     @Test
     public void testGetUserByAccount() {
 
-        User user = userMapper.getUserByAccount("admin");
+        User user = userMapper.getUserByAccount("S2024b46009");
         Assertions.assertNotNull(user);
         System.out.println(user);
     }
@@ -33,7 +33,6 @@ public class UserMapperTest {
         User user = new User();
         user.setAccount("test_user");
         user.setPassword("new_password");
-        user.setRole("student");
         user.setUserType("Student");
         int result = userMapper.updateUser(user);
         System.out.println("Update result: " + result);

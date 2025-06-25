@@ -13,6 +13,9 @@ public class Teacher {
     @TableField("teacher_name")
     private String teacherName;
 
+    @TableField("teacher_course")
+    private String teacherCourse;
+
     @TableField("max_hours_per_week")
     private Integer maxHoursPerWeek;
 }

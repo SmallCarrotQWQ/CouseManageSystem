@@ -15,6 +15,9 @@ public interface TeacherMapper extends BaseMapper<Teacher> {
     @Select("SELECT * FROM teacher WHERE teacher_name = #{teacherName}")
     Teacher getTeacherByName(String teacherName);
 
+    @Select("SELECT * FROM teacher WHERE teacher_course = #{teacherCourse}")
+    Teacher getTeacherByCourse(String teacherCourse);
+
     @Update("UPDATE teacher SET teacher_name = #{teacherName}, max_hours_per_week = #{maxHoursPerWeek} WHERE teacher_id = #{teacherId}")
     int updateTeacher(Teacher teacher);
 

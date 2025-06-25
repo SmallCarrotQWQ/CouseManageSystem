@@ -12,10 +12,10 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT * FROM user WHERE account = #{account}")
     User getUserByAccount(String account);
 
-    @Select("SELECT * FROM user WHERE role = #{role}")
-    User getUserByRole(String role);
+    @Select("SELECT * FROM user WHERE user_type = #{usertype}")
+    User getUserByUserType(String usertype);
 
-    @Update("UPDATE user SET password = #{password}, role = #{role}, user_type = #{userType} WHERE account = #{account}")
+    @Update("UPDATE user SET password = #{password}, user_type = #{userType} WHERE account = #{account}")
     int updateUser(User user);
 
     @Select("SELECT * FROM user")
