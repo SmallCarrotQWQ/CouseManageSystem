@@ -15,32 +15,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private StudentMapper studentMapper;
-
-    @Autowired
-    private TeacherMapper teacherMapper;
+    @Autowired private UserMapper userMapper;
+    @Autowired private StudentMapper studentMapper;
+    @Autowired private TeacherMapper teacherMapper;
 
     @Override
     public LoginResponse login(LoginRequest req) {
+        // 登录逻辑同之前代码
         String account = req.getAccount();
         String password = req.getPassword();
-        if (account == null || password == null) {
-            return null;
-        }
+        if (account == null || password == null) return null;
         User user = userMapper.getUserByAccount(account);
-        if (user == null) {
-            return null;
-        }
-        if (!password.equals(user.getPassword())) {
-            return null;
-        }
+        if (user == null || !password.equals(user.getPassword())) return null;
         LoginResponse resp = new LoginResponse();
         resp.setAccount(account);
         resp.setUserType(user.getUserType());
@@ -65,66 +56,68 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean registerStudent(StudentRegisterRequest req) {
+        // 学生注册同之前逻辑
         String account = req.getAccount();
-        if (account == null) {
-            return false;
-        }
-        User exist = userMapper.getUserByAccount(account);
-        if (exist != null) {
-            return false;
-        }
-        // 插入 user
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(req.getPassword());
-        user.setUserType("student");
-        int u = userMapper.insert(user);
-        if (u <= 0) {
-            return false;
-        }
-        // 插入 student
+        if (account == null || userMapper.getUserByAccount(account) != null) return false;
+        User u = new User();
+        u.setAccount(account);
+        u.setPassword(req.getPassword());
+        u.setUserType("student");
+        if (userMapper.insert(u) <= 0) return false;
         Student stu = new Student();
         stu.setStudentId(account);
         stu.setStudentName(req.getStudentName());
         stu.setMajor(req.getMajor());
         stu.setClassName(req.getClassName());
-        int s = studentMapper.insert(stu);
-        if (s <= 0) {
-            throw new RuntimeException("学生信息插入失败，触发回滚");
-        }
+        if (studentMapper.insert(stu) <= 0) throw new RuntimeException("学生信息插入失败");
         return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean registerTeacher(TeacherRegisterRequest req) {
+        // 教师注册同之前逻辑
         String account = req.getAccount();
-        if (account == null) {
-            return false;
-        }
-        User exist = userMapper.getUserByAccount(account);
-        if (exist != null) {
-            return false;
-        }
-        // 插入 user
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(req.getPassword());
-        user.setUserType("teacher");
-        int u = userMapper.insert(user);
-        if (u <= 0) {
-            return false;
-        }
-        // 插入 teacher
+        if (account == null || userMapper.getUserByAccount(account) != null) return false;
+        User u = new User();
+        u.setAccount(account);
+        u.setPassword(req.getPassword());
+        u.setUserType("teacher");
+        if (userMapper.insert(u) <= 0) return false;
         Teacher tea = new Teacher();
         tea.setTeacherId(account);
         tea.setTeacherName(req.getTeacherName());
         tea.setTeacherCourse(req.getTeacherCourse());
         tea.setMaxHoursPerWeek(req.getMaxHoursPerWeek());
-        int t = teacherMapper.insert(tea);
-        if (t <= 0) {
-            throw new RuntimeException("教师信息插入失败，触发回滚");
-        }
+        if (teacherMapper.insert(tea) <= 0) throw new RuntimeException("教师信息插入失败");
         return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int createUser(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateUser(User user) {
+        return userMapper.updateUser(user) > 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteUser(String account) {
+        return userMapper.deleteById(account) > 0;
+    }
+
+    @Override
+    public User getUserByAccount(String account) {
+        return userMapper.getUserByAccount(account);
+    }
+
+    @Override
+    public List<User> listUsers() {
+        return userMapper.getAllUsers();
     }
 }

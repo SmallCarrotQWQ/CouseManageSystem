@@ -2,12 +2,13 @@ package com.example.coursemanagesystem.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
 @TableName("user")
 public class User {
-    @TableField("account")
+    @TableId("account")
     private String account;
 
     @TableField("password")
