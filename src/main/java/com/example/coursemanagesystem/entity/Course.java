@@ -1,5 +1,6 @@
 package com.example.coursemanagesystem.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.Data;
 @Data
 @TableName("course")
 public class Course {
-    @TableField("course_id")
+    @TableId("course_id")
     private String courseId;
 
     @TableField("course_name")
