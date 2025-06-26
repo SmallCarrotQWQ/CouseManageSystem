@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponse login(LoginRequest req) {
-        // 登录逻辑同之前代码
         String account = req.getAccount();
         String password = req.getPassword();
         if (account == null || password == null) return null;
@@ -56,7 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean registerStudent(StudentRegisterRequest req) {
-        // 学生注册同之前逻辑
         String account = req.getAccount();
         if (account == null || userMapper.getUserByAccount(account) != null) return false;
         User u = new User();
@@ -76,7 +74,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean registerTeacher(TeacherRegisterRequest req) {
-        // 教师注册同之前逻辑
         String account = req.getAccount();
         if (account == null || userMapper.getUserByAccount(account) != null) return false;
         User u = new User();
@@ -94,21 +91,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public int createUser(User user) {
-        return userMapper.insert(user);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public boolean updateUser(User user) {
-        return userMapper.updateUser(user) > 0;
+        User original = userMapper.getUserByAccount(user.getAccount());
+        if (original == null) return false;
+        // 仅更新密码
+        User updateObj = new User();
+        updateObj.setAccount(user.getAccount());
+        updateObj.setPassword(user.getPassword());
+        updateObj.setUserType(original.getUserType());
+        return userMapper.updateUser(updateObj) > 0;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteUser(String account) {
+        User u = userMapper.getUserByAccount(account);
+        if (u == null) return false;
+        if ("student".equals(u.getUserType())) {
+            studentMapper.deleteById(account);
+        } else if ("teacher".equals(u.getUserType())) {
+            teacherMapper.deleteById(account);
+        }
         return userMapper.deleteById(account) > 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int createUser(User user) {
+        return userMapper.insert(user);
     }
 
     @Override

@@ -30,12 +30,12 @@ public interface UserService {
     int createUser(User user);
 
     /**
-     * 更新 User
+     * 更新 User，仅允许修改密码
      */
     boolean updateUser(User user);
 
     /**
-     * 删除 User
+     * 删除 User，同时删除 student/teacher 表对应记录
      */
     boolean deleteUser(String account);
 
