@@ -16,7 +16,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     Course getCourseByName(String courseName);
 
     @Update("UPDATE course SET course_name = #{courseName}, course_teacher = #{courseTeacher}, " +
-            "location = #{location}, class_name = #{className}, total_hours = #{totalHours}, " +
+            "request = #{request}, class_name = #{className}, total_hours = #{totalHours}, " +
             "start_end_time = #{startEndTime}, remaining_hours = #{remainingHours} WHERE course_id = #{courseId}")
     int updateCourse(Course course);
 

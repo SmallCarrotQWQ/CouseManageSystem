@@ -27,4 +27,7 @@ public class ScheduleResult {
 
     @TableField("specific_time")
     private String specificTime;
+
+    @TableField("location")
+    private String location;
 }

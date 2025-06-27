@@ -16,7 +16,7 @@ public interface ScheduleResultMapper extends BaseMapper<ScheduleResult> {
     ScheduleResult getScheduleResultByCourseId(String courseId);
 
     @Update("UPDATE schedule_result SET course_name = #{courseName}, class_name = #{className}, " +
-            "course_time = #{courseTime}, total_hours = #{totalHours}, specific_time = #{specificTime} WHERE schedule_id = #{scheduleId}")
+            "course_time = #{courseTime}, total_hours = #{totalHours}, specific_time = #{specificTime}, location = #{location} WHERE schedule_id = #{scheduleId}")
     int updateScheduleResult(ScheduleResult scheduleResult);
 
     @Select("SELECT * FROM schedule_result")

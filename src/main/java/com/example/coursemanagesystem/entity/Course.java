@@ -17,8 +17,8 @@ public class Course {
     @TableField("course_teacher")
     private String courseTeacher;
 
-    @TableField("location")
-    private String location;
+    @TableField("request")
+    private String request;
 
     @TableField("class_name")
     private String className;
