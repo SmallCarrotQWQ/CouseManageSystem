@@ -25,7 +25,8 @@ public class ScheduleResultController {
      *   "className": "软工23-1",
      *   "courseTime": "周一第1-2节",
      *   "totalHours": 32,
-     *   "specificTime": "2025-09-01 08:00-10:00",
+     *   "startTime": "2025-09-01T08:00:00",
+     *   "endTime": "2025-09-01T10:00:00",
      *   "location": "教学楼101"
      * }
      */
@@ -51,7 +52,8 @@ public class ScheduleResultController {
      * Body: {
      *   "scheduleId": "SC20250001",
      *   "courseId": "C1001",
-     *   "specificTime": "2025-09-02 14:00-16:00",
+     *   "startTime": "2025-09-02T14:00:00",
+     *   "endTime": "2025-09-02T16:00:00",
      *   "location": "教学楼202"
      * }
      */

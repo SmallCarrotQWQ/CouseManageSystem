@@ -43,10 +43,11 @@ public class ScheduleResultServiceImpl implements ScheduleResultService {
         ScheduleResult existing = resultMapper.getScheduleResultByCourseId(result.getCourseId());
         if (existing == null) return false;
 
-        existing.setSpecificTime(result.getSpecificTime());
+        existing.setStartTime(result.getStartTime());
+        existing.setEndTime(result.getEndTime());
         existing.setLocation(result.getLocation());
 
-        return resultMapper.updateSpecificInfo(existing) > 0;
+        return resultMapper.updateScheduleResult(existing) > 0;
     }
 
     @Override

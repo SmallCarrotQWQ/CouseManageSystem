@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @TableName("schedule_result")
 public class ScheduleResult {
@@ -25,8 +27,11 @@ public class ScheduleResult {
     @TableField("total_hours")
     private Integer totalHours;
 
-    @TableField("specific_time")
-    private String specificTime;
+    @TableField("start_time")
+    private LocalDateTime startTime;
+
+    @TableField("end_time")
+    private LocalDateTime endTime;
 
     @TableField("location")
     private String location;
