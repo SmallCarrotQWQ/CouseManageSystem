@@ -45,12 +45,23 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
     }
 
     @Override
+    public List<ScheduleTask> getByScheduleId(String scheduleId) {
+        return taskMapper.getScheduleTasksByScheduleId(scheduleId);
+    }
+
+    @Override
     public List<ScheduleTask> getByCourseId(String courseId) {
         return taskMapper.getScheduleTasksByCourseId(courseId);
     }
 
     @Override
-    public ScheduleTask getByScheduleId(String scheduleId) {
-        return taskMapper.getScheduleTaskById(scheduleId);
+    public ScheduleTask getByScheduleIdAndCourseId(String scheduleId, String courseId) {
+        return taskMapper.getByScheduleIdAndCourseId(scheduleId, courseId);
+    }
+
+    @Override
+    public List<ScheduleTask> getByCourseName(String courseName) {
+        return taskMapper.getScheduleTasksByCourseName(courseName);
     }
 }
+

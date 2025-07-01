@@ -81,8 +81,8 @@ public class ScheduleTaskController {
      * 根据任务ID查询
      * GET /api/task/byScheduleId/SC20250001
      */
-    @GetMapping("/byScheduleId/{scheduleId}")
-    public Result<ScheduleTask> getByScheduleId(@PathVariable String scheduleId) {
+    @GetMapping("byScheduleId/{scheduleId}")
+    public Result<List<ScheduleTask>> getByScheduleId(@PathVariable String scheduleId) {
         return Result.success(taskService.getByScheduleId(scheduleId));
     }
 }
