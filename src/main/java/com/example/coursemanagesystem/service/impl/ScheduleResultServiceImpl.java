@@ -69,4 +69,17 @@ public class ScheduleResultServiceImpl implements ScheduleResultService {
     public List<ScheduleResult> getByCourseName(String courseName) {
         return resultMapper.getScheduleResultsByCourseName(courseName);
     }
+
+    @Override
+    public List<ScheduleResult> getByClassName(String className) {
+        return resultMapper.getScheduleResultsByClassName(className);
+    }
+
+    @Override
+    public List<ScheduleResult> getByCourseIds(List<String> courseIds) {
+        if (courseIds == null || courseIds.isEmpty()) return List.of();
+        return resultMapper.getScheduleResultsByCourseIds(courseIds);
+    }
+
+
 }

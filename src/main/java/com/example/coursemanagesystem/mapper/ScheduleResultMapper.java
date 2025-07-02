@@ -24,6 +24,12 @@ public interface ScheduleResultMapper {
     @Delete("DELETE FROM schedule_result WHERE schedule_id = #{scheduleId} AND course_id = #{courseId}")
     int deleteByScheduleIdAndCourseId(@Param("scheduleId") String scheduleId, @Param("courseId") String courseId);
 
+    @Delete("DELETE FROM schedule_result WHERE schedule_id = #{scheduleId}")
+    int deleteByScheduleId(@Param("scheduleId") String scheduleId);
+
+    @Delete("DELETE FROM schedule_result WHERE schedule_id = #{scheduleId} AND course_id = #{courseId}")
+    int deleteByPrimaryKey(@Param("scheduleId") String scheduleId, @Param("courseId") String courseId);
+
     @Select("SELECT * FROM schedule_result")
     List<ScheduleResult> getAllScheduleResults();
 
@@ -33,6 +39,23 @@ public interface ScheduleResultMapper {
     @Select("SELECT * FROM schedule_result WHERE course_id = #{courseId}")
     ScheduleResult getScheduleResultByCourseId(String courseId);
 
+    @Select("SELECT * FROM schedule_result WHERE schedule_id = #{scheduleId} AND course_id = #{courseId}")
+    ScheduleResult getByScheduleIdAndCourseId(@Param("scheduleId") String scheduleId,
+                                              @Param("courseId") String courseId);
+
     @Select("SELECT * FROM schedule_result WHERE course_name = #{courseName}")
     List<ScheduleResult> getScheduleResultsByCourseName(String courseName);
+
+    @Select("SELECT * FROM schedule_result WHERE class_name = #{className}")
+    List<ScheduleResult> getScheduleResultsByClassName(String className);
+
+    @Select("<script>" +
+            "SELECT * FROM schedule_result WHERE course_id IN " +
+            "<foreach item='id' collection='courseIds' open='(' separator=',' close=')'>" +
+            "#{id}" +
+            "</foreach>" +
+            "</script>")
+    List<ScheduleResult> getScheduleResultsByCourseIds(@Param("courseIds") List<String> courseIds);
+
+
 }

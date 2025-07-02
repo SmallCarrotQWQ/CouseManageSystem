@@ -1,5 +1,9 @@
 package com.example.coursemanagesystem.controller;
 
+import com.example.coursemanagesystem.entity.Course;
+import com.example.coursemanagesystem.entity.ScheduleResult;
+import com.example.coursemanagesystem.mapper.CourseMapper;
+import com.example.coursemanagesystem.service.ScheduleResultService;
 import com.example.coursemanagesystem.utils.Result;
 import com.example.coursemanagesystem.dto.TeacherUpdateRequest;
 import com.example.coursemanagesystem.entity.Teacher;
@@ -18,8 +22,16 @@ public class TeacherController {
 
     @Autowired
     private TeacherService teacherService;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ScheduleResultService scheduleResultService;
+
+    @Autowired
+    private CourseMapper courseMapper;
+
 
     /**
      * 示例: 添加教师
@@ -107,4 +119,23 @@ public class TeacherController {
         }
         return Result.error("删除教师失败");
     }
+
+    /**
+     * 示例：获取教师授课排课信息
+     * GET /api/teacher/schedule/{teacherId}
+     * 示例：GET /api/teacher/schedule/T20250630
+     */
+    @GetMapping("/schedule/{teacherId}")
+    public Result<List<ScheduleResult>> getScheduleByTeacherId(@PathVariable String teacherId) {
+        List<Course> courses = courseMapper.getAllCourses();
+        List<String> courseIds = courses.stream()
+                .filter(c -> teacherId.equals(c.getCourseTeacher()))
+                .map(Course::getCourseId)
+                .toList();
+
+        List<ScheduleResult> results = scheduleResultService.getByCourseIds(courseIds);
+
+        return Result.success(results);
+    }
+
 }

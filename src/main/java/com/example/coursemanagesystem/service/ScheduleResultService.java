@@ -20,4 +20,9 @@ public interface ScheduleResultService {
     ScheduleResult getByCourseId(String courseId);
 
     List<ScheduleResult> getByCourseName(String courseName);
+
+    List<ScheduleResult> getByClassName(String className);
+
+    List<ScheduleResult> getByCourseIds(List<String> courseIds);
+
 }

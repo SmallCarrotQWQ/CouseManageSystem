@@ -1,10 +1,12 @@
 package com.example.coursemanagesystem.controller;
 
+import com.example.coursemanagesystem.entity.ScheduleResult;
 import com.example.coursemanagesystem.utils.Result;
 import com.example.coursemanagesystem.dto.StudentUpdateRequest;
 import com.example.coursemanagesystem.entity.Student;
 import com.example.coursemanagesystem.entity.User;
 import com.example.coursemanagesystem.service.StudentService;
+import com.example.coursemanagesystem.service.ScheduleResultService;
 import com.example.coursemanagesystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ public class StudentController {
 
     @Autowired private StudentService studentService;
     @Autowired private UserService userService;
+    @Autowired private ScheduleResultService ScheduleResultService;
 
     /**
      * 示例: 添加学生
@@ -108,4 +111,22 @@ public class StudentController {
                 ? Result.success("删除学生成功", null)
                 : Result.error("删除学生失败");
     }
+
+    /**
+     * 示例: 获取某个学生的课表信息
+     * GET /api/student/schedule/{studentId}
+     * 示例: GET /api/student/schedule/S20250630
+     */
+    @GetMapping("/schedule/{studentId}")
+    public Result<List<ScheduleResult>> getScheduleByStudentId(@PathVariable String studentId) {
+        Student student = studentService.getById(studentId);
+        if (student == null) {
+            return Result.error("未找到该学生信息");
+        }
+        String className = student.getClassName();
+        List<ScheduleResult> results = ScheduleResultService.getByClassName(className);
+        // 排除 scheduleId 字段不需要做额外处理，前端可自行忽略
+        return Result.success(results);
+    }
+
 }

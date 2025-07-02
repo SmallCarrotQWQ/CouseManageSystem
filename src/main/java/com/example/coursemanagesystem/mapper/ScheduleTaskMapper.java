@@ -21,6 +21,9 @@ public interface ScheduleTaskMapper extends BaseMapper<ScheduleTask> {
     @Delete("DELETE FROM schedule_task WHERE schedule_id = #{scheduleId} AND course_id = #{courseId}")
     int deleteByScheduleIdAndCourseId(@Param("scheduleId") String scheduleId, @Param("courseId") String courseId);
 
+    @Delete("DELETE FROM schedule_task WHERE schedule_id = #{scheduleId}")
+    int deleteByScheduleId(@Param("scheduleId") String scheduleId);
+
     @Select("SELECT * FROM schedule_task WHERE schedule_id = #{scheduleId} AND course_id = #{courseId}")
     ScheduleTask getByScheduleIdAndCourseId(@Param("scheduleId") String scheduleId, @Param("courseId") String courseId);
 
