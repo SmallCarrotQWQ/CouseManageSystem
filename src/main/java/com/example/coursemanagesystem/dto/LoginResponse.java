@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 public class LoginResponse {
     private String account;
-    private String userType;  // "student" 或 "teacher"
-    // 学生字段
+    private String userType;
+    // 学生
     private String studentName;
     private String major;
     private String className;
-    // 教师字段
+    // 教师
     private String teacherName;
     private String teacherCourse;
     private Integer maxHoursPerWeek;

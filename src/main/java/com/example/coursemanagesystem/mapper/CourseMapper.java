@@ -22,4 +22,8 @@ public interface CourseMapper extends BaseMapper<Course> {
 
     @Select("SELECT * FROM course")
     List<Course> getAllCourses();
+
+    @Select("SELECT * FROM course WHERE class_name = #{className}")
+    List<Course> getCoursesByClassName(String className);
+
 }

@@ -127,7 +127,6 @@ public class AiScheduleServiceImpl implements AiScheduleService {
                 .getJSONObject(0)
                 .getString("content");
 
-        // 提取 JSON 数组
         int startIndex = content.indexOf('[');
         int endIndex = content.lastIndexOf(']') + 1;
         if (startIndex == -1 || endIndex <= startIndex) {

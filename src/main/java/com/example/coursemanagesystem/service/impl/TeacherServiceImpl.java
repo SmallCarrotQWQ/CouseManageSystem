@@ -29,7 +29,7 @@ public class TeacherServiceImpl
                 throw new RuntimeException("同步更新 user.account 失败");
             }
         }
-        // 同理：删除旧记录再插入新
+        //删除旧记录再插入新
         teacherMapper.deleteById(oldId);
         Teacher t = new Teacher();
         t.setTeacherId(newId);
